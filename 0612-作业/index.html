@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
     <style>
-        body {
+       body {
             margin: 0;
             background: #989a9e;
         }
@@ -147,12 +147,9 @@
 
 <body>
     <div class="box">
-        <h2>
-            酷狗注册
-        </h2>
+        <h2>酷狗注册</h2>
         <p>
             <input type="text" placeholder="请输入手机号">
-            <span></span>
         </p>
         <p>
             <button>点击按钮进行验证</button>
@@ -234,8 +231,8 @@
                     left: "0px"
                 });
                 $(".strip").css({
-                            width:"20px"
-                        })
+                    width: "20px"
+                })
                 // console.log(rLeft, rTop);
             }
 
@@ -243,15 +240,17 @@
             // 滑动验证
             function blackSlide() {
                 // 鼠标按下事件
-                $(".black").mousedown(function () {
+                $(".black").on("touchstart", function () {
                     // 最小最小大移动距离
                     let max = $(".slide").width() - $(this).width();
                     let min = 0;
                     let bLeft = 0;
-                    $(document).mousemove(function (e) {
+                    $(document).on("touchmove", function (e) {
                         e = e || window.event;
+
                         // 移动距离
-                        bLeft = e.pageX - $(".slide").offset().left;
+                        bLeft = e.originalEvent.changedTouches[0].pageX - $(".slide").offset()
+                            .left;
                         bLeft = bLeft < min ? min : bLeft;
                         bLeft = bLeft > max ? max : bLeft;
                         $(".black").css({
@@ -261,12 +260,12 @@
                             left: bLeft + "px"
                         });
                         $(".strip").css({
-                            width:bLeft+20+"px"
+                            width: bLeft + 20 + "px"
                         })
                     });
 
                     // 鼠标松开事件
-                    $(document).mouseup(function () {
+                    $(document).on("touchend", function () {
                         $(document).unbind();
                         if (rLeft < (bLeft + 5) && (rLeft > bLeft - 5)) {
                             layer.msg('验证成功');
@@ -280,6 +279,8 @@
                 });
 
             }
+            random();
+            blackSlide();
         })
     </script>
 </body>
